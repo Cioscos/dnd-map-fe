@@ -5,3 +5,33 @@
     height: 100vh;
     background-color: #f0f0f0;
 }
+
+svg g polygon {
+    stroke: #3F51B5;
+    stroke-width: 0.2;
+    transition: fill-opacity .2s;
+}
+
+svg g text {
+    font-size: 0.2em;
+    fill: #000;
+    fill-opacity: 0.9;
+    transition: fill-opacity .2s;
+}
+
+svg {
+
+}
+
+svg g {
+    fill: #3F51B5;
+    fill-opacity: 0.6;
+}
+
+svg g:hover {
+    fill-opacity: 1;
+}
+
+svg g:hover text {
+    fill-opacity: 1;
+}
