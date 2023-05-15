@@ -1,15 +1,21 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Button, Form} from 'react-bootstrap';
+import {GithubPicker} from 'react-color';
 import './css/PlayingUser.css'
 
 function PlayingUser() {
     const [userName, setUserName] = useState('');
     const [sessionCode, setSessionCode] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const [color, setColor] = useState('#000000');
     const history = useHistory();
 
-    const handleFormSubmit = (event) => {
+    const handleColorChange = (color) => {
+        setColor(color.hex);
+    };
+
+    const handleFormSubmit = async (event) => {
         event.preventDefault();
 
         // Check if user name is empty
@@ -24,8 +30,23 @@ function PlayingUser() {
             return;
         }
 
-        // Here you would send the user's name and session code to the backend...
-        history.push('/map');
+        // Here you would send the user's name, session code and color to the backend...
+        try {
+            // Simulate a call to the backend...
+            const response = await new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    const success = Math.random() > 0.5; // 50% chance of success
+                    success ? resolve({success}) : reject({message: 'Session code or username already in use.'});
+                }, 1000);
+            });
+
+            if (response.success) {
+                localStorage.setItem('user', JSON.stringify({userName, sessionCode, color}));
+                history.push('/map');
+            }
+        } catch (err) {
+            setErrorMessage(err.message);
+        }
     };
 
     return (
@@ -50,6 +71,10 @@ function PlayingUser() {
                         onChange={e => setSessionCode(e.target.value)}
                         placeholder="Enter session code"
                     />
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Choose Your Color</Form.Label>
+                    <GithubPicker color={color} onChangeComplete={handleColorChange}/>
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Join Session
