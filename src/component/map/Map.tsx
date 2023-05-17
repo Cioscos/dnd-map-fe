@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
 import {GridGenerator, Hexagon, HexGrid, Layout, Text} from 'react-hexgrid';
 import './css/Map.css';
 import SockJS from 'sockjs-client';
+import {useEffect, useState} from "react";
 
 function Map() {
     // Let's assume that we have 5x5 grid for simplicity

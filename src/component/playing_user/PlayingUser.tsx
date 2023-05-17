@@ -1,15 +1,15 @@
-import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom';
-import {Button, Form} from 'react-bootstrap';
-import {GithubPicker} from 'react-color';
+
 import './css/PlayingUser.css'
+import {useState} from "react";
+import {Form, useNavigate} from "react-router-dom";
+import {GithubPicker} from 'react-color';
 
 function PlayingUser() {
     const [userName, setUserName] = useState('');
     const [sessionCode, setSessionCode] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [color, setColor] = useState('#000000');
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleColorChange = (color) => {
         setColor(color.hex);
@@ -33,7 +33,7 @@ function PlayingUser() {
         // Here you would send the user's name, session code and color to the backend...
         try {
             // Simulate a call to the backend...
-            const response = await new Promise((resolve, reject) => {
+            const response = await new Promise<any>((resolve, reject) => {
                 setTimeout(() => {
                     const success = Math.random() > 0.5; // 50% chance of success
                     success ? resolve({success}) : reject({message: 'Session code or username already in use.'});
@@ -42,7 +42,7 @@ function PlayingUser() {
 
             if (response.success) {
                 localStorage.setItem('user', JSON.stringify({userName, sessionCode, color}));
-                history.push('/map');
+                //navigate(routesMap.SELECT_PROVINCIA_PAGE, {state: {tipoAccreditamento});
             }
         } catch (err) {
             setErrorMessage(err.message);
@@ -54,31 +54,19 @@ function PlayingUser() {
             <h1 className="title">You are a Playing User!</h1>
             <Form className="form-container" onSubmit={handleFormSubmit}>
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
-                <Form.Group>
-                    <Form.Label>User Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={userName}
-                        onChange={e => setUserName(e.target.value)}
-                        placeholder="Enter your name"
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Session Code</Form.Label>
-                    <Form.Control
-                        type="text"
-                        value={sessionCode}
-                        onChange={e => setSessionCode(e.target.value)}
-                        placeholder="Enter session code"
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Choose Your Color</Form.Label>
+                <div>
+                    User Name
+                </div>
+                <div>
+                    Session Code
+                </div>
+                <div>
+                    Choose Your Color
                     <GithubPicker color={color} onChangeComplete={handleColorChange}/>
-                </Form.Group>
-                <Button variant="primary" type="submit">
+                </div>
+                <button className="primary" type="submit">
                     Join Session
-                </Button>
+                </button>
             </Form>
         </div>
     );

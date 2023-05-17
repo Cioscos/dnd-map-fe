@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Button, Form} from 'react-bootstrap';
 import './css/MapDevice.css';
+import {useState} from "react";
 
 
 function MapDevice() {

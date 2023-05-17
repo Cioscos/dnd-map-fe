@@ -1,0 +1,27 @@
+// Local sizes
+$margin-size-0: 0px;
+$margin-size-1: 4px;
+$margin-size-2: 8px;
+$margin-size-3: 16px;
+$margin-size-4: 24px;
+$margin-size-5: 48px;
+
+.MainLayout {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--x-layout-background-color-variant-1);
+  min-height: 100vh;
+}
+
+.MainLayout__container {
+  flex-grow: 1;
+  border-radius: 8px;
+  margin-top: $margin-size-5;
+  margin-bottom: $margin-size-5;
+}
+
+.MainLayout__main {
+  min-height: 400px;
+  border-radius: 8px;
+  background-color: white;
+}
