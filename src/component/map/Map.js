@@ -10,7 +10,7 @@ function Map() {
     const [isConnected, setIsConnected] = useState(false);
 
     const connect = () => {
-        const socket = new SockJS('http://localhost:8080/websocket');
+        const socket = new SockJS('https://60ab-93-146-168-140.ngrok-free.app/websocket');
         var Stomp = require('stompjs')
         stompClient = Stomp.over(socket);
 
