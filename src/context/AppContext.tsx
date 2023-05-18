@@ -58,7 +58,7 @@ const AppContextProvider = ({ children }: TAppContextProviderProps) => {
                 setUserDetails(res)
             },
             error: (err) =>{
-                console.log(err.response.esito.messaggi[0].codMsg);
+                console.log(err);
             }
         });
     }, []);

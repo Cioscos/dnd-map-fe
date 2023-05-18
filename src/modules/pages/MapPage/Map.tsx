@@ -1,47 +1,50 @@
-import {GridGenerator, Hexagon, HexGrid, Layout, Text} from 'react-hexgrid';
+import {GridGenerator, Hex, Hexagon, HexGrid, Layout, Text} from 'react-hexgrid';
 import './css/Map.css';
-import SockJS from 'sockjs-client';
 import {useEffect, useState} from "react";
+import { RxStomp } from "@stomp/rx-stomp";
+import { WebSocket } from 'ws';
 
 function Map() {
     // Let's assume that we have 5x5 grid for simplicity
     const hexagons = GridGenerator.rectangle(10, 10);
-    let stompClient = undefined;
     const [isConnected, setIsConnected] = useState(false);
 
+    const [stompClient, setStompClient] = useState(new RxStomp());
+    stompClient.configure({
+        brokerURL: 'ws://91ad-93-146-168-140.ngrok-free.app/websocket',
+    });
+
+    const SessionUpdateREST= stompClient.watch({ destination: "/topic/sessionUpdate" });
+
     const connect = () => {
-        const socket = new SockJS('https://60ab-93-146-168-140.ngrok-free.app/websocket');
-        var Stomp = require('stompjs')
-        stompClient = Stomp.over(socket);
-
-        stompClient.connect({}, function (frame) {
-            console.log('Connected: ' + frame);
-            setIsConnected(true);
-            subscribeToUpdates();
-        });
-    }
-
-    const subscribeToUpdates = () => {
-        if (stompClient && isConnected) {
-            stompClient.subscribe('/topic/sessionUpdate', function (messageOutput) {
-                console.log('Received: ', messageOutput.body);
-            });
-        }
+        stompClient.activate();
+        SessionUpdateREST.subscribe({
+            next: (res) => {
+                console.log(res)
+                setIsConnected(true);
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
     }
 
     const disconnect = () => {
-        if (stompClient && stompClient.connected) {
-            stompClient.disconnect();
+        if (stompClient && isConnected) {
+            stompClient.deactivate();
         }
         console.log("Disconnected");
     };
 
-    const handleHexagonClick = (hex) => {
-        if (stompClient && stompClient.connected && isConnected) {
+    const handleHexagonClick = (hex: Hex) => {
+        if (stompClient && isConnected) {
             const position = {q: hex.q, r: hex.r}
             const player = {name: 'Cioscos', position: position, sessionToken: "Cioscos#blabla#1"}
             const message = {sessionName: 'prova_1', player: player};
-            stompClient.send("/session/player/move", {}, JSON.stringify(message));
+            stompClient.publish({
+                destination: "/session/player/move",
+                body: JSON.stringify(message),
+            });
         }
     }
 

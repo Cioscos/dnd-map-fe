@@ -1,6 +1,6 @@
 
 import './css/PlayingUser.css'
-import {useState} from "react";
+import {SetStateAction, useState} from "react";
 import {Form, useNavigate} from "react-router-dom";
 import {GithubPicker} from 'react-color';
 
@@ -11,14 +11,14 @@ function PlayingUser() {
     const [color, setColor] = useState('#000000');
     const navigate = useNavigate();
 
-    const handleColorChange = (color) => {
+    const handleColorChange = (color: { hex: SetStateAction<string>; }) => {
         setColor(color.hex);
     };
 
-    const handleFormSubmit = async (event) => {
+    const handleFormSubmit = async (event: { preventDefault: () => void; }) => {
         event.preventDefault();
 
-        // Check if user name is empty
+        // Check if userName is empty
         if (!userName.trim()) {
             setErrorMessage('Please enter your name');
             return;
@@ -44,7 +44,7 @@ function PlayingUser() {
                 localStorage.setItem('user', JSON.stringify({userName, sessionCode, color}));
                 //navigate(routesMap.SELECT_PROVINCIA_PAGE, {state: {tipoAccreditamento});
             }
-        } catch (err) {
+        } catch (err: any) {
             setErrorMessage(err.message);
         }
     };

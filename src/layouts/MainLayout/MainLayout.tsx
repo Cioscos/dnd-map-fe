@@ -1,6 +1,8 @@
 // Libs
 import { useEffect, useState } from "react";
 import "./MainLayout.scss";
+import HomePage from "../../modules/pages/HomePage/HomePage";
+import Map from "../../modules/pages/MapPage/Map";
 
 // Core
 
@@ -34,6 +36,7 @@ const MainLayout = () => {
 
     return (
         <div className="MainLayout">
+            <Map></Map>
         </div>
 );
 };

@@ -1,7 +1,7 @@
 import {Observable} from "rxjs";
 import {ajax} from "rxjs/ajax";
 import {map} from "rxjs/operators";
-import UserDetails from "../types/userDetails";
+import UserDetails from "../types/UserDetails";
 
 const UserDetailsService = (): Observable<UserDetails> => {
 
