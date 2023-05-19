@@ -18,7 +18,14 @@ function Map() {
     const connect = () => {
         stompClient.activate();
         setIsConnected(true);
-        SessionUpdateREST.subscribe((message) => console.log(message.body));
+        SessionUpdateREST.subscribe({
+            next: (res) => {
+                console.log(res)
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
     }
 
     const disconnect = () => {

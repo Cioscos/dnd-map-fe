@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./MainLayout.scss";
 import HomePage from "../../modules/pages/HomePage/HomePage";
 import Map from "../../modules/pages/MapPage/Map";
+import {Outlet} from "react-router-dom";
 
 // Core
 
@@ -36,7 +37,7 @@ const MainLayout = () => {
 
     return (
         <div className="MainLayout">
-            <Map></Map>
+            <Outlet />
         </div>
 );
 };

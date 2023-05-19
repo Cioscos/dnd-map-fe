@@ -6,8 +6,6 @@ import {routesMap} from "../../../routes";
 function HomePage() {
     const navigate = useNavigate();
 
-    console.log("SEI QUI")
-
     return (
         <div className="HomePage">
             <div className="home-container">
