@@ -1,8 +1,7 @@
 import {GridGenerator, Hex, Hexagon, HexGrid, Layout, Text} from 'react-hexgrid';
 import './css/Map.css';
 import {useEffect, useState} from "react";
-import { RxStomp } from "@stomp/rx-stomp";
-import { WebSocket } from 'ws';
+import {RxStomp} from "@stomp/rx-stomp";
 
 function Map() {
     // Let's assume that we have 5x5 grid for simplicity
@@ -11,29 +10,23 @@ function Map() {
 
     const [stompClient, setStompClient] = useState(new RxStomp());
     stompClient.configure({
-        brokerURL: 'ws://91ad-93-146-168-140.ngrok-free.app/websocket',
+        brokerURL: 'ws://localhost:8080/websocket',
     });
 
     const SessionUpdateREST= stompClient.watch({ destination: "/topic/sessionUpdate" });
 
     const connect = () => {
         stompClient.activate();
-        SessionUpdateREST.subscribe({
-            next: (res) => {
-                console.log(res)
-                setIsConnected(true);
-            },
-            error: (err) => {
-                console.log(err)
-            }
-        })
+        setIsConnected(true);
+        SessionUpdateREST.subscribe((message) => console.log(message.body));
     }
 
     const disconnect = () => {
         if (stompClient && isConnected) {
             stompClient.deactivate();
+            console.log("Disconnected");
         }
-        console.log("Disconnected");
+
     };
 
     const handleHexagonClick = (hex: Hex) => {
