@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import "./MainLayout.scss";
 import HomePage from "../../modules/pages/HomePage/HomePage";
-import Map from "../../modules/pages/MapPage/Map";
+import MapPage from "../../modules/pages/MapPage/MapPage";
 import {Outlet} from "react-router-dom";
 
 // Core

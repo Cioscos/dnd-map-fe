@@ -43,7 +43,7 @@ function JoinSessionPage() {
 
             if (response.success) {
                 localStorage.setItem('user', JSON.stringify({userName, sessionCode, color}));
-                navigate(routesMap.MAP);
+                navigate(routesMap.MAP_PAGE);
             }
         } catch (err: any) {
             setErrorMessage(err.message);

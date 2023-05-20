@@ -12,14 +12,14 @@ import ProtectedRoute from "./ProtectedRoute";
 import MainLayout from "../layouts/MainLayout/MainLayout";
 import CreateSessionPage from "../modules/pages/CreateSessionPage/CreateSessionPage";
 import JoinSessionPage from "../modules/pages/JoinSessionPage/JoinSessionPage";
-import Map from "../modules/pages/MapPage/Map";
+import MapPage from "../modules/pages/MapPage/MapPage";
 
 const appRoute = "/dnd/spa"
 const routesMap = {
     HOME_PAGE: appRoute,
     CREATE_SESSION_PAGE: appRoute+"/create-session",
     JOIN_SESSION_PAGE: appRoute+"/join-session",
-    MAP: appRoute+"/map"
+    MAP_PAGE: appRoute+"/map"
 };
 
 const routerInstance = createBrowserRouter([
@@ -32,7 +32,7 @@ const routerInstance = createBrowserRouter([
             {path: routesMap.HOME_PAGE, element: <HomePage />},
             {path: routesMap.CREATE_SESSION_PAGE, element: <CreateSessionPage />},
             {path: routesMap.JOIN_SESSION_PAGE, element: <JoinSessionPage />},
-            {path: routesMap.MAP, element: <Map />},
+            {path: routesMap.MAP_PAGE, element: <MapPage />},
         ]
     }
 ], { basename: process.env.REACT_APP_BASENAME });

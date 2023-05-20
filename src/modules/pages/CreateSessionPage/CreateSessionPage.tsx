@@ -12,7 +12,7 @@ function CreateSessionPage() {
     const saveUserToBackEnd = () => {
 
         // Here you would send the session name to the backend...
-        navigate(routesMap.MAP);
+        navigate(routesMap.MAP_PAGE);
     }
 
     return (
