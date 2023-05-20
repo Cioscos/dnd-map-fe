@@ -1,11 +1,9 @@
 // Libs
-import { useContext, useState, useEffect } from "react";
-import { createBrowserRouter } from "react-router-dom";
+import {useEffect, useState} from "react";
+import {createBrowserRouter} from "react-router-dom";
 
 // Core
-
 // Layouts
-
 // Pages
 import HomePage from "../modules/pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
@@ -61,9 +59,9 @@ const useHeaderRoutes = () => {
 };
 
 /** Indirizzi del BackEnd */
-const beRoute = "https://"+constant.URL_WEBSOCKET
+const beRoute = "http://" + constant.URL_WEBSOCKET
 const indirizziFetch = {
-    addPlayerToSession: beRoute+"/dnd-map/api/session/"
+    addPlayerToSession: beRoute + "/dnd-map/api/session/"
 }
 
 export {

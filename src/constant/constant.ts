@@ -8,7 +8,7 @@ const Constant = {
          HOME_PAGE: "HomePage"
     },
 
-    URL_WEBSOCKET: "f2bc-93-146-168-140.ngrok-free.app"
+    URL_WEBSOCKET: "25.37.232.26:8080"
 };
 
 export default Constant;

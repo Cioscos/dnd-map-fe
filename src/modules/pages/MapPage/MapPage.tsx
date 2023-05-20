@@ -16,7 +16,10 @@ function MapPage() {
 
     const [stompClient, setStompClient] = useState(new RxStomp());
     stompClient.configure({
-        brokerURL: 'ws://'+Constant.URL_WEBSOCKET+'/websocket'
+        connectHeaders: {
+            'ngrok-skip-browser-warning': 'big penis'
+        },
+        brokerURL: 'ws://' + Constant.URL_WEBSOCKET + '/websocket'
         /*brokerURL: 'ws://localhost:8080/websocket'*/
     });
 
