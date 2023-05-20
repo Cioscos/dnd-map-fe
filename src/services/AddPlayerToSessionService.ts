@@ -6,7 +6,7 @@ import {indirizziFetch} from "../routes";
 
 const AddPlayerToSessionService = (sessionName: string, body: any): Observable<Player> => {
 
-    return ajax.post<Player>(indirizziFetch.addPlayerToSession+sessionName+"/players", body).pipe(
+    return ajax.post<Player>(indirizziFetch.addPlayerToSession+sessionName+"/players", body, {'ngrok-skip-browser-warning': 'big penis'}).pipe(
         map((res) => {
             return res.response;
         })
