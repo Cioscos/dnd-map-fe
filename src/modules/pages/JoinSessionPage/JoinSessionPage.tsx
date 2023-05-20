@@ -52,6 +52,7 @@ function JoinSessionPage() {
             },
             error: (err) =>{
                 console.log(err);
+                setErrorMessage(err.response?.error);
             }
         });
 

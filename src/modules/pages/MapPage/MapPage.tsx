@@ -32,8 +32,12 @@ function MapPage() {
             error: (err) => {
                 console.log(err)
             }
-        })
+        });
     }
+
+    useEffect(() => {
+        connect();
+    },[]);
 
     const disconnect = () => {
         if (stompClient && isConnected) {
@@ -55,19 +59,14 @@ function MapPage() {
         }
     }
 
-    useEffect(() => {
-        connect();
-
-        return () => {
-            disconnect();
-        };
-    },[]);
-
     return (
         <div className="map">
             <div>
                 <p className="h1">Questa è la Mappa!</p>
-                <button className="btn btn-outline-primary" onClick={() => navigate(routesMap.CREATE_SESSION_PAGE)}>{Constant.BUTTON_LBL.INDIETRO}</button>
+                <button className="btn btn-outline-primary" onClick={() => {
+                    disconnect()
+                    navigate(routesMap.HOME_PAGE)
+                }}>{Constant.BUTTON_LBL.HOME_PAGE}</button>
             </div>
             <HexGrid width={1000} height={800}>
                 <Layout size={{x: 6, y: 6}} flat={false} spacing={1.02} origin={{x: -45, y: -40}}>
