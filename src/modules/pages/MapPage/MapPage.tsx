@@ -17,6 +17,7 @@ function MapPage() {
     const [stompClient, setStompClient] = useState(new RxStomp());
     stompClient.configure({
         brokerURL: 'ws://'+Constant.URL_WEBSOCKET+'/websocket'
+        /*brokerURL: 'ws://localhost:8080/websocket'*/
     });
 
     const SessionUpdateREST= stompClient.watch({ destination: "/topic/sessionUpdate" });
@@ -53,7 +54,7 @@ function MapPage() {
             const player = {name: 'Cioscos', position: position, sessionToken: "Cioscos#blabla#1"}
             const message = {sessionName: 'prova_1', player: player};
             stompClient.publish({
-                destination: "/session/player/move",
+                destination: "/player/move",
                 body: JSON.stringify(message)
             });
         }
