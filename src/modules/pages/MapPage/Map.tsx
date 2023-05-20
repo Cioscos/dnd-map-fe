@@ -2,15 +2,21 @@ import {GridGenerator, Hex, Hexagon, HexGrid, Layout, Text} from 'react-hexgrid'
 import './css/Map.css';
 import {useEffect, useState} from "react";
 import {RxStomp} from "@stomp/rx-stomp";
+import Constant from "../../../constant/constant";
+import {routesMap} from "../../../routes";
+import {useNavigate} from "react-router-dom";
 
 function Map() {
     // Let's assume that we have 5x5 grid for simplicity
     const hexagons = GridGenerator.rectangle(10, 10);
     const [isConnected, setIsConnected] = useState(false);
 
+    const navigate = useNavigate();
+
+
     const [stompClient, setStompClient] = useState(new RxStomp());
     stompClient.configure({
-        brokerURL: 'ws://localhost:8080/websocket',
+        brokerURL: 'ws://'+Constant.URL_WEBSOCKET+'/websocket',
     });
 
     const SessionUpdateREST= stompClient.watch({ destination: "/topic/sessionUpdate" });
@@ -58,7 +64,10 @@ function Map() {
 
     return (
         <div className="map">
-            <h1>This is the Map!</h1>
+            <div>
+                <p className="h1">Questa è la Mappa!</p>
+                <button className="btn btn-outline-primary" onClick={() => navigate(routesMap.CREATE_SESSION_PAGE)}>{Constant.BUTTON_LBL.INDIETRO}</button>
+            </div>
             <HexGrid width={1000} height={800}>
                 <Layout size={{x: 6, y: 6}} flat={false} spacing={1.02} origin={{x: -45, y: -40}}>
                     {

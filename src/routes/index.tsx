@@ -10,15 +10,15 @@ import { createBrowserRouter } from "react-router-dom";
 import HomePage from "../modules/pages/HomePage/HomePage";
 import ProtectedRoute from "./ProtectedRoute";
 import MainLayout from "../layouts/MainLayout/MainLayout";
-import MapDevice from "../modules/pages/MapDevicePage/MapDevice";
-import PlayingUser from "../modules/pages/PlayingUserPage/PlayingUser";
+import CreateSessionPage from "../modules/pages/CreateSessionPage/CreateSessionPage";
+import JoinSessionPage from "../modules/pages/JoinSessionPage/JoinSessionPage";
 import Map from "../modules/pages/MapPage/Map";
 
 const appRoute = "/dnd/spa"
 const routesMap = {
     HOME_PAGE: appRoute,
-    MAP_DEVICE: appRoute+"/map-device",
-    PLAYING_USER: appRoute+"/playing-user",
+    CREATE_SESSION_PAGE: appRoute+"/create-session",
+    JOIN_SESSION_PAGE: appRoute+"/join-session",
     MAP: appRoute+"/map"
 };
 
@@ -30,8 +30,8 @@ const routerInstance = createBrowserRouter([
         </ProtectedRoute>,
         children: [
             {path: routesMap.HOME_PAGE, element: <HomePage />},
-            {path: routesMap.MAP_DEVICE, element: <MapDevice />},
-            {path: routesMap.PLAYING_USER, element: <PlayingUser />},
+            {path: routesMap.CREATE_SESSION_PAGE, element: <CreateSessionPage />},
+            {path: routesMap.JOIN_SESSION_PAGE, element: <JoinSessionPage />},
             {path: routesMap.MAP, element: <Map />},
         ]
     }

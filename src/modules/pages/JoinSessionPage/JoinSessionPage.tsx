@@ -1,10 +1,12 @@
 
-import './css/PlayingUser.css'
+import './css/JoinSessionPage.css'
 import {SetStateAction, useState} from "react";
 import {Form, useNavigate} from "react-router-dom";
 import {GithubPicker} from 'react-color';
+import {routesMap} from "../../../routes";
+import Constant from "../../../constant/constant";
 
-function PlayingUser() {
+function JoinSessionPage() {
     const [userName, setUserName] = useState('');
     const [sessionCode, setSessionCode] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -15,8 +17,7 @@ function PlayingUser() {
         setColor(color.hex);
     };
 
-    const handleFormSubmit = async (event: { preventDefault: () => void; }) => {
-        event.preventDefault();
+    const joinSession = async () => {
 
         // Check if userName is empty
         if (!userName.trim()) {
@@ -42,7 +43,7 @@ function PlayingUser() {
 
             if (response.success) {
                 localStorage.setItem('user', JSON.stringify({userName, sessionCode, color}));
-                //navigate(routesMap.SELECT_PROVINCIA_PAGE, {state: {tipoAccreditamento});
+                navigate(routesMap.MAP);
             }
         } catch (err: any) {
             setErrorMessage(err.message);
@@ -52,24 +53,40 @@ function PlayingUser() {
     return (
         <div className="playing-user-container">
             <h1 className="title">You are a Playing User!</h1>
-            <Form className="form-container" onSubmit={handleFormSubmit}>
+            <Form className="form-container">
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <div>
-                    User Name
+                    <div>User Name</div>
+                    <input
+                        type="text"
+                        value={userName}
+                        onChange={e => setUserName(e.target.value)}
+                        placeholder="Enter your name"
+                    />
                 </div>
-                <div>
-                    Session Code
+                <div className="mt-3">
+                    <div>Session Code</div>
+                    <input
+                        type="text"
+                        value={sessionCode}
+                        onChange={e => setSessionCode(e.target.value)}
+                        placeholder="Enter session code"
+                    />
                 </div>
-                <div>
+                <div className="mt-3">
                     Choose Your Color
                     <GithubPicker color={color} onChangeComplete={handleColorChange}/>
                 </div>
-                <button className="primary" type="submit">
-                    Join Session
-                </button>
+                <div className="mt-5">
+                    <button className="btn btn-outline-primary" onClick={() => navigate(routesMap.HOME_PAGE)}>{Constant.BUTTON_LBL.INDIETRO}</button>
+                    <button className="btn btn-primary mx-3"
+                            onClick={() => joinSession()}>
+                        {Constant.BUTTON_LBL.CONFERMA}
+                    </button>
+                </div>
             </Form>
         </div>
     );
 }
 
-export default PlayingUser;
+export default JoinSessionPage;

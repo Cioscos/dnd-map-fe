@@ -11,8 +11,8 @@ function HomePage() {
             <div className="home-container">
                 <h1 className="home-title">Welcome to the D&D Combat Map!</h1>
                 <div className="button-container">
-                    <button onClick={() => navigate(routesMap.MAP_DEVICE)}>Map Device</button>
-                    <button onClick={() => navigate(routesMap.PLAYING_USER)}>Playing User</button>
+                    <button className="btn btn-primary" onClick={() => navigate(routesMap.CREATE_SESSION_PAGE)}>Crea sessione</button>
+                    <button className="btn btn-primary" onClick={() => navigate(routesMap.JOIN_SESSION_PAGE)}>Unisciti ad una sessione</button>
                 </div>
             </div>
         </div>

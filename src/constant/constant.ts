@@ -1,0 +1,12 @@
+const Constant = {
+
+     BUTTON_LBL: {
+         INDIETRO: "Indietro",
+         CONFERMA: "Conferma",
+         CREATE_SESSION: "Crea Sessione",
+    },
+
+    URL_WEBSOCKET: "f2bc-93-146-168-140.ngrok-free.app"
+};
+
+export default Constant;
