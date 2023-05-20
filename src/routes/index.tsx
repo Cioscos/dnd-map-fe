@@ -13,7 +13,9 @@ import MainLayout from "../layouts/MainLayout/MainLayout";
 import CreateSessionPage from "../modules/pages/CreateSessionPage/CreateSessionPage";
 import JoinSessionPage from "../modules/pages/JoinSessionPage/JoinSessionPage";
 import MapPage from "../modules/pages/MapPage/MapPage";
+import constant from "../constant/constant";
 
+/** Indirizzi delle Pagine */
 const appRoute = "/dnd/spa"
 const routesMap = {
     HOME_PAGE: appRoute,
@@ -35,7 +37,7 @@ const routerInstance = createBrowserRouter([
             {path: routesMap.MAP_PAGE, element: <MapPage />},
         ]
     }
-], { basename: process.env.REACT_APP_BASENAME });
+], {});
 
 const useHeaderRoutes = () => {
     const [headerRoutesArr, setHeaderRoutesArr] = useState(genHeaderRoutesArr());
@@ -58,7 +60,10 @@ const useHeaderRoutes = () => {
     return [headerRoutesArr];
 };
 
+/** Indirizzi del BackEnd */
+const beRoute = "http://"+constant.URL_WEBSOCKET
 const indirizziFetch = {
+    addPlayerToSession: beRoute+"/dnd-map/api/session/"
 }
 
 export {

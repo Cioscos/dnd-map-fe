@@ -3,6 +3,7 @@ const Constant = {
      BUTTON_LBL: {
          INDIETRO: "Indietro",
          CONFERMA: "Conferma",
+         UNISCITI: "Unisciti",
          CREATE_SESSION: "Crea Sessione",
     },
 

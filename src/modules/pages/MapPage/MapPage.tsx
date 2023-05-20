@@ -16,7 +16,7 @@ function MapPage() {
 
     const [stompClient, setStompClient] = useState(new RxStomp());
     stompClient.configure({
-        brokerURL: 'ws://'+Constant.URL_WEBSOCKET+'/websocket',
+        brokerURL: 'ws://'+Constant.URL_WEBSOCKET+'/websocket'
     });
 
     const SessionUpdateREST= stompClient.watch({ destination: "/topic/sessionUpdate" });
@@ -24,6 +24,7 @@ function MapPage() {
     const connect = () => {
         stompClient.activate();
         setIsConnected(true);
+
         SessionUpdateREST.subscribe({
             next: (res) => {
                 console.log(res)
@@ -49,7 +50,7 @@ function MapPage() {
             const message = {sessionName: 'prova_1', player: player};
             stompClient.publish({
                 destination: "/session/player/move",
-                body: JSON.stringify(message),
+                body: JSON.stringify(message)
             });
         }
     }
@@ -60,7 +61,7 @@ function MapPage() {
         return () => {
             disconnect();
         };
-    },);
+    },[]);
 
     return (
         <div className="map">

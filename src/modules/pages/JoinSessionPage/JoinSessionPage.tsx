@@ -5,10 +5,12 @@ import {Form, useNavigate} from "react-router-dom";
 import {GithubPicker} from 'react-color';
 import {routesMap} from "../../../routes";
 import Constant from "../../../constant/constant";
+import UserDetailsService from "../../../services/UserDetailsService";
+import AddPlayerToSessionService from "../../../services/AddPlayerToSessionService";
 
 function JoinSessionPage() {
     const [userName, setUserName] = useState('');
-    const [sessionCode, setSessionCode] = useState('');
+    const [dndSessionName, setDndSessionName] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [color, setColor] = useState('#000000');
     const navigate = useNavigate();
@@ -21,67 +23,72 @@ function JoinSessionPage() {
 
         // Check if userName is empty
         if (!userName.trim()) {
-            setErrorMessage('Please enter your name');
+            setErrorMessage('Inserisci il nome');
             return;
         }
 
         // Check if session code is empty
-        if (!sessionCode.trim()) {
-            setErrorMessage('Please enter the session code');
+        if (!dndSessionName.trim()) {
+            setErrorMessage('Inserisci il codice della Sessione');
             return;
         }
 
-        // Here you would send the user's name, session code and color to the backend...
-        try {
-            // Simulate a call to the backend...
-            const response = await new Promise<any>((resolve, reject) => {
-                setTimeout(() => {
-                    const success = Math.random() > 0.5; // 50% chance of success
-                    success ? resolve({success}) : reject({message: 'Session code or username already in use.'});
-                }, 1000);
-            });
+        let sessionToken = localStorage.getItem('sessionToken');
+        if(sessionToken === null){
+            const datetime = new Date().getDate() + new Date().getMonth() + new Date().getFullYear() + new Date().getTime();
+            sessionToken = userName+'#'+datetime;
 
-            if (response.success) {
-                localStorage.setItem('user', JSON.stringify({userName, sessionCode, color}));
-                navigate(routesMap.MAP_PAGE);
-            }
-        } catch (err: any) {
-            setErrorMessage(err.message);
+            localStorage.setItem('sessionToken', sessionToken);
         }
+
+        /** Send the user's name, session code and color to the backend */
+        let addPlayerToSessionREST = AddPlayerToSessionService(dndSessionName, {name: userName, color: color, sessionToken: sessionToken});
+        addPlayerToSessionREST.subscribe({
+            next: (res) => {
+                console.log(res);
+
+                localStorage.setItem('user', JSON.stringify({userName, color, sessionName: dndSessionName}));
+                navigate(routesMap.MAP_PAGE);
+            },
+            error: (err) =>{
+                console.log(err);
+            }
+        });
+
     };
 
     return (
         <div className="playing-user-container">
-            <h1 className="title">You are a Playing User!</h1>
+            <h1 className="title">Unisciti ad una Sessione!</h1>
             <Form className="form-container">
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
                 <div>
-                    <div>User Name</div>
+                    <div>Inserisci il tuo nome</div>
                     <input
                         type="text"
                         value={userName}
                         onChange={e => setUserName(e.target.value)}
-                        placeholder="Enter your name"
+                        placeholder="Nome"
                     />
                 </div>
                 <div className="mt-3">
-                    <div>Session Code</div>
+                    <div>Inserisci il codice sessione</div>
                     <input
                         type="text"
-                        value={sessionCode}
-                        onChange={e => setSessionCode(e.target.value)}
-                        placeholder="Enter session code"
+                        value={dndSessionName}
+                        onChange={e => setDndSessionName(e.target.value)}
+                        placeholder="Codice sessione"
                     />
                 </div>
                 <div className="mt-3">
-                    Choose Your Color
+                    <div className="mb-2">Scegli un colore</div>
                     <GithubPicker color={color} onChangeComplete={handleColorChange}/>
                 </div>
                 <div className="mt-5">
                     <button className="btn btn-outline-primary" onClick={() => navigate(routesMap.HOME_PAGE)}>{Constant.BUTTON_LBL.INDIETRO}</button>
                     <button className="btn btn-primary mx-3"
                             onClick={() => joinSession()}>
-                        {Constant.BUTTON_LBL.CONFERMA}
+                        {Constant.BUTTON_LBL.UNISCITI}
                     </button>
                 </div>
             </Form>
