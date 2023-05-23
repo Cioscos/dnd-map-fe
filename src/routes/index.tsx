@@ -61,7 +61,8 @@ const useHeaderRoutes = () => {
 /** Indirizzi del BackEnd */
 const beRoute = "http://" + constant.URL_WEBSOCKET
 const indirizziFetch = {
-    addPlayerToSession: beRoute + "/dnd-map/api/session/"
+    addPlayerToSession: beRoute + "/dnd-map/api/session/",
+    createNewSession: beRoute + "/dnd-map/api/session/new/"
 }
 
 export {

@@ -1,18 +1,34 @@
 import {useNavigate} from "react-router-dom";
 import './css/CreateSessionPage.css';
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {routesMap} from "../../../routes";
 import Constant from "../../../constant/constant";
-
+import NewDndSessionService from "../../../services/NewDndSessionService";
+import {AppContext} from "../../../context/AppContext";
 
 function CreateSessionPage() {
+    const {setDndSession} = useContext(AppContext);
     const [sessionName, setSessionName] = useState('');
+    const [xCoordinate, setXCoordinate] = useState('');
+    const [yCoordinate, setYCoordinate] = useState('');
+
     const navigate = useNavigate();
 
     const saveUserToBackEnd = () => {
 
-        // Here you would send the session name to the backend...
-        navigate(routesMap.MAP_PAGE);
+        // Crea la sessione nel BE e restituisce l'oggetto sessione
+        let createNewSessionREST = NewDndSessionService(sessionName, xCoordinate+"x"+yCoordinate);
+        createNewSessionREST.subscribe({
+            next: (res) => {
+                console.log(res)
+                setDndSession(res)
+
+                navigate(routesMap.MAP_PAGE);
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        });
     }
 
     return (
@@ -20,12 +36,31 @@ function CreateSessionPage() {
             <h1 className="title">Crea la tua sessione Privata</h1>
             <div className="form-container">
                 <div>
-                    <p>Session Name</p>
+                    <p>Nome Sessione</p>
                     <input
                         type="text"
                         value={sessionName}
                         onChange={e => setSessionName(e.target.value)}
-                        placeholder="Enter session name"
+                        placeholder="Inserisci il nome della sessione"
+                    />
+                </div>
+                <div>
+                    <p>Dimensioni Mappa</p>
+                    <p>X</p>
+                    <input
+                        type="number"
+                        min={0}
+                        value={xCoordinate}
+                        onChange={e => setXCoordinate(e.target.value)}
+                        placeholder="Inserisci la coordinata X"
+                    />
+                    <p>Y</p>
+                    <input
+                        type="number"
+                        min={0}
+                        value={yCoordinate}
+                        onChange={e => setYCoordinate(e.target.value)}
+                        placeholder="Inserisci la coordinata Y"
                     />
                 </div>
                 <div className="mt-3">

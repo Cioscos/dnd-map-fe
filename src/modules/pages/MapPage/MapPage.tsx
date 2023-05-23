@@ -1,12 +1,15 @@
 import {GridGenerator, Hex, Hexagon, HexGrid, Layout, Text} from 'react-hexgrid';
 import './css/MapPage.css';
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {RxStomp} from "@stomp/rx-stomp";
 import Constant from "../../../constant/constant";
 import {routesMap} from "../../../routes";
 import {useNavigate} from "react-router-dom";
+import {AppContext} from "../../../context/AppContext";
 
 function MapPage() {
+    const {dndSession} = useContext(AppContext);
+
     // Let's assume that we have 5x5 grid for simplicity
     const hexagons = GridGenerator.rectangle(10, 10);
     const [isConnected, setIsConnected] = useState(false);
@@ -28,6 +31,8 @@ function MapPage() {
     const connect = () => {
         stompClient.activate();
         setIsConnected(true);
+
+        console.log(dndSession)
 
         SessionUpdateREST.subscribe({
             next: (res) => {
